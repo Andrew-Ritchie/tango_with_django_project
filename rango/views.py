@@ -22,7 +22,8 @@ def index(request):
         visitor_cookie_handler(request)
         context_dict['visits'] = request.session['visits']
         response = render(request, 'rango/index.html', context=context_dict)
-        return response
+        return response
+
         
 
 def about(request):
@@ -226,6 +227,7 @@ def user_login(request):
 @login_required
 def restricted(request):
         return HttpResponse("Since you're logged in, you can see this text!")
+        return render(request, 'rango/restricted.html', {})
 
 # Use the login_required() decorator to ensure only those logged in can
 # access the view.
@@ -256,7 +258,8 @@ def visitor_cookie_handler(request):
         if (datetime.now() - last_visit_time).days > 0:
                 visits = visits + 1
                 #update the last visit cookie now that we have updated the count
-                request.session['last_visit'] = str(datetime.now())
+                request.session['last_visit'] = str(datetime.now())
+
         else:
                 # set the last visit cookie
                 request.session['last_visit'] = last_visit_cookie
